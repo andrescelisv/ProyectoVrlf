@@ -23,7 +23,7 @@
       
         function authenticate() {
           return gapi.auth2.getAuthInstance()
-              .signIn({scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly"})
+              .signIn({scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.photos.readonly"})
               .then(function() { console.log("Sign-in successful"); },
                     function(err) { console.error("Error signing in", err); });
         }
@@ -35,9 +35,9 @@
         }
         
         // Make sure the client is loaded and sign-in is complete before calling this method.
-        function execute() {
+       /* function execute() {
           return gapi.client.drive.permissions.list({
-            "fileId": "https://drive.google.com/drive/u/3/folders/1dn8lVEq7ZOWoX5mykPpfOqrrunHwjXmR",
+            "fileId": "1dn8lVEq7ZOWoX5mykPpfOqrrunHwjXmR",
             "supportsAllDrives": true,
             "useDomainAdminAccess": false
           })
@@ -49,7 +49,21 @@
         }
         gapi.load("client:auth2", function() {
           gapi.auth2.init({client_id: "766562886222-bu6lhs9pcrqcsvov234t2bd9v66pn6ql.apps.googleusercontent.com"});
-        });
+        });*/
+
+        function execute() {
+    return gapi.client.drive.files.copy({
+      "resource": {}
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "766562886222-bu6lhs9pcrqcsvov234t2bd9v66pn6ql.apps.googleusercontent.com"});
+  });
 
 
         /**
